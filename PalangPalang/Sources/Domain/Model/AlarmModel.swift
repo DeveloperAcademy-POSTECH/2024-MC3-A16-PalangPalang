@@ -16,5 +16,5 @@ struct AlarmModel: Storable {
   }
   
   static let storageKey: String = "alarm"
-  static let timeLimit: TimeInterval = 1
+  static let timeLimit: TimeInterval = 3
 }
