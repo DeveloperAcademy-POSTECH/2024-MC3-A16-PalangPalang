@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct AlarmMainView: View {
-  let alarmViewModel: AlarmViewModel = .init()
+  let alarmViewModel: AlarmSettingsViewModel = .init()
   
   var body: some View {
     VStack {

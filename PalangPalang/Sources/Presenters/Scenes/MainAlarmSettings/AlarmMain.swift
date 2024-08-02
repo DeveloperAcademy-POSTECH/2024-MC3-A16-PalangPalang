@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct AlarmMain: View {
-  let alarmViewModel: AlarmViewModel
+  let alarmViewModel: AlarmSettingsViewModel
 
   var body: some View {
     Spacer()

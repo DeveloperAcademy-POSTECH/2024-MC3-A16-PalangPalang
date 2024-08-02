@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct AlarmOnSettings: View {
-  @Bindable var alarmViewModel: AlarmViewModel
+  @Bindable var alarmViewModel: AlarmSettingsViewModel
   
   var body: some View {
     VStack {
