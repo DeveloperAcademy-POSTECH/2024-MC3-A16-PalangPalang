@@ -24,8 +24,10 @@ class TimerSchedulerService {
   }
 
   func scheduleAlarmAndMissionTimers(_ alarm: AlarmModel) {
-    scheduleAlarmNotification(dueDate: alarm.dueDate)
-    scheduleMissionNotification(missionCompleted: alarm.missionDueDate)
+    let dueDate = alarm.dueDate
+    let missionCompleted = alarm.missionDueDate
+    scheduleAlarmNotification(dueDate: dueDate)
+    scheduleMissionNotification(missionCompleted: missionCompleted)
   }
   
   // 모든 타이머를 종료하는 메서드

@@ -43,10 +43,11 @@ class AlarmUseCase: CheckAlarmStatus {
     timerService = TimerSchedulerService.init(
       alarm: alarm,
       onMissionStart: { [weak self] in
-        print("알람 끝/ 미션시작")
+        print("미션 시작 시 불리는 메서드")
         self?.verifyAndChangeAlarmState()
       }, onMissionFinish: { [weak self] in
-        print("미션 TimeOver")
+        print("미션 종료 시 불리는 메서드 ")
+//        print("미션 TimeOver")
         self?.verifyAndChangeAlarmState()
       }
     )
@@ -64,7 +65,7 @@ class AlarmUseCase: CheckAlarmStatus {
     
     // AlarmModel이 없는 경우
     guard let alarm = alarm else { return .alarmOnSettings }
-    
+
     // AlarmModel이 있는 경우
     if currentDate < alarm.dueDate {
       return .alarmOnProcess
