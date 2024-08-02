@@ -13,7 +13,7 @@ struct AlarmSettingsModel {
   @ValidMinutes var minutes: String
   var isAM: Bool { return hour.toInt <= 12 }
   
-  var alarmDate: Date? {
+  var convertDate: Date? {
     let calendar = Calendar.current
     let now = Date()
     
