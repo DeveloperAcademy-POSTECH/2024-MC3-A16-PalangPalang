@@ -1,5 +1,5 @@
 //
-//  SettingsViewModel.swift
+//  AlarmOnProcess.swift
 //  PalangPalang
 //
 //  Created by 박혜운 on 8/2/24.
@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+protocol AlarmOnProcess {
+  func readAlarmDate() -> (start: Date, due: Date)?
+}

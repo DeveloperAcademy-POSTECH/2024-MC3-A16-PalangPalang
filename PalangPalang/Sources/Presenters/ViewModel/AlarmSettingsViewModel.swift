@@ -1,5 +1,5 @@
 //
-//  AlarmViewModel.swift
+//  AlarmSettingsViewModel.swift
 //  PalangPalang
 //
 //  Created by 박혜운 on 8/1/24.
@@ -9,13 +9,12 @@
 import Foundation
 
 @Observable
-class AlarmViewModel {
+class AlarmSettingsViewModel {
   struct State {
     var alarm: AlarmSettingsModel = .init()
+    
     var formattedAlarmDate: String {
-      guard let alarmDate = alarm.alarmDate else {
-        return "Invalid Date"
-      }
+      guard let alarmDate = alarm.convertDate else { return "Invalid Date" }
       
       let dateFormatter = DateFormatter()
       dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -35,19 +34,22 @@ class AlarmViewModel {
   }
   
   private(set) var state: State = .init()
-  private let useCase: AlarmSettings = AlarmUseCase.shared
+  private let useCase: MainAlarmSettings = AlarmUseCase.shared
   
   func effect(action: Action) {
     switch action {
     case .tappedSettingsButton:
       state.onSettings = true
+      
     case .tappedSettingsDoneButton:
       state.onSettings = false
       state.readyForStart = true
+      
     case let .changeAlarm(newAlarm):
       state.alarm = newAlarm
+      
     case .tappedStartAlarm:
-      guard let alarmDueDate = state.alarm.alarmDate else { print("알람 변환실패"); return }
+      guard let alarmDueDate = state.alarm.convertDate else { print("알람 변환실패"); return }
       let newAlarm = AlarmModel(dueDate: alarmDueDate)
       useCase.addAlarm(alarm: newAlarm)
       
