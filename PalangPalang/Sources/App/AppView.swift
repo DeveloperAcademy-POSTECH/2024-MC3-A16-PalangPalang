@@ -5,7 +5,7 @@ struct AppView: View {
   
   var body: some View {
     switch appStatus.alarmStatus {
-    case .main:
+    case .mainAlarmSettings:
       AlarmMainView()
     case .alarmOnProcess:
       AlarmOnProcessView()

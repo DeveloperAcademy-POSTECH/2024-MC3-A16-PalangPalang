@@ -12,7 +12,7 @@ import Foundation
 class AlarmUseCase: AlarmStaus {
   static let shared = AlarmUseCase()
   
-  var alarmStatus: AlarmState = .main
+  var alarmStatus: AlarmState = .mainAlarmSettings
   private var timerService: TimerSchedulerService?
   
   private init() {
@@ -43,7 +43,7 @@ class AlarmUseCase: AlarmStaus {
     let currentDate = Date()
     
     // AlarmModel이 없는 경우
-    guard let alarm = alarm else { return .main }
+    guard let alarm = alarm else { return .mainAlarmSettings }
 
     // AlarmModel이 있는 경우
     if currentDate < alarm.dueDate {

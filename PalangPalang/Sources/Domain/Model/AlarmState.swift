@@ -9,7 +9,7 @@
 import Foundation
 
 enum AlarmState {
-  case main
+  case mainAlarmSettings
   case alarmOnProcess
   case missionOnProcess
   case missionTimeout
