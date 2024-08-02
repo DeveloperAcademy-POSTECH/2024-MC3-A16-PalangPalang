@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct AppView: View {
-  let appState = AlarmUseCase.shared
+  let appStatus: AlarmStaus = AlarmUseCase.shared
   
   var body: some View {
-    switch appState.alarmState {
-    case .alarmOnSettings:
+    switch appStatus.alarmStatus {
+    case .main:
       AlarmMainView()
     case .alarmOnProcess:
       AlarmOnProcessView()
