@@ -39,7 +39,7 @@ struct AlarmMain: View {
 }
 
 #Preview {
-  AlarmMain(alarmViewModel: .init())
+  AlarmMain(alarmViewModel: .init(useCase: AlarmUseCase.init()))
 }
 
 private struct Clock: View {

@@ -35,7 +35,7 @@ struct AlarmOnSettings: View {
 }
 
 #Preview {
-  AlarmOnSettings(alarmViewModel: .init())
+  AlarmOnSettings(alarmViewModel: .init(useCase: AlarmUseCase.init()))
 }
 
 private struct ClockSetting: View {
@@ -52,7 +52,7 @@ private struct ClockSetting: View {
       .pickerStyle(WheelPickerStyle())
       
       Picker("분", selection: $alarm.minutes) {
-        ForEach(ValidMinutes.availableMinutes, id: \.self) { minute in
+        ForEach(ValidMinutesOrSecond.availableMinutesOrSecond, id: \.self) { minute in
           Text(minute)
             .tag(minute)
         }
