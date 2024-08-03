@@ -19,4 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.makeKeyAndVisible()
     return true
   }
+  
+  func applicationDidBecomeActive(_ application: UIApplication) {
+    NotificationCenter.default.post(name: .appDidBecomeActive, object: nil)
+  }
+}
+
+extension Notification.Name {
+  static let appDidBecomeActive = Notification.Name("appDidBecomeActive")
 }
