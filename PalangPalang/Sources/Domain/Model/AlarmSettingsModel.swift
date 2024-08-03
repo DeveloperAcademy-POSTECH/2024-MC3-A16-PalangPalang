@@ -10,9 +10,10 @@ import Foundation
 
 struct AlarmSettingsModel {
   @ValidHour var hour: String
-  @ValidMinutes var minutes: String
+  @ValidMinutesOrSecond var minutes: String
   var isAM: Bool { return hour.toInt <= 12 }
   
+  /// 입력한 hour, minutes 정보를 토대로 Date 반환 계산속성
   var convertDate: Date? {
     let calendar = Calendar.current
     let now = Date()
@@ -48,20 +49,9 @@ struct AlarmSettingsModel {
   // 현재 시각으로 시, 분 초기화
   init() {
     self.init(hour: "", minutes: "")
-    self.hour = getCurrentHour()
-    self.minutes = getCurrentMinute()
-  }
-  
-  private func getCurrentHour() -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "H" // 24시간 형식
-    return dateFormatter.string(from: Date())
-  }
-  
-  private func getCurrentMinute() -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "m" // 분 형식
-    return dateFormatter.string(from: Date())
+    let now = Date.now
+    self.hour = now.getHour()
+    self.minutes = now.getMinute()
   }
 }
 
