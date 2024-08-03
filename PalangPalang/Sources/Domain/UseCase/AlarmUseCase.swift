@@ -59,8 +59,8 @@ class AlarmUseCase: AlarmStaus {
 extension AlarmUseCase: MainAlarmSettings {
   func addAlarm(alarm: AlarmModel) {
     DataStoreService<AlarmModel>.init().save(alarm)
-    LocalNotificationService.init().scheduleNotification(title: "미션시작", body: "귀신 퇴치하러 갑시당!", at: alarm.dueDate)
-    timerService?.scheduleAlarmAndMissionTimers(alarm)
+    LocalNotificationService.init().scheduleNotification(title: "미션시작", body: "귀신 퇴치하러 갑시당!", at: alarm.dueDate.addingTimeInterval(1)) //1초 지연 뒤 알림
+    timerService?.scheduleAlarmAndMissionTimers(alarm.delayBySeconds(1)) // 1초 지연 뒤 검증
     verifyAndChangeAlarmState()
   }
 }
