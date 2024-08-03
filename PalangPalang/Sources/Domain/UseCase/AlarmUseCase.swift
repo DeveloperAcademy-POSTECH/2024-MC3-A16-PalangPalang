@@ -10,12 +10,10 @@ import Foundation
 
 @Observable
 class AlarmUseCase: AlarmStaus {
-  static let shared = AlarmUseCase()
-  
   var alarmStatus: AlarmState = .mainAlarmSettings
   private var timerService: TimerSchedulerService?
   
-  private init() {
+  init() {
     self.verifyAndChangeAlarmState()
     self.setupTimerService()
   }
@@ -34,14 +32,16 @@ class AlarmUseCase: AlarmStaus {
   
   /// 상태 갱신 요청
   func verifyAndChangeAlarmState() {
+    let nowMissionCompleted = DataStoreService<MissionCompletedModel>().load()
     let nowAlarm = DataStoreService<AlarmModel>().load()
-    self.alarmStatus = determineAppState(alarm: nowAlarm)
+    self.alarmStatus = determineAppState(completedMission: nowMissionCompleted, alarm: nowAlarm)
   }
   
   /// Alarm 값을 토대로 Alarm 상태 분석
-  private func determineAppState(alarm: AlarmModel?) -> AlarmState {
+  private func determineAppState(completedMission: MissionCompletedModel?, alarm: AlarmModel?) -> AlarmState {
     let currentDate = Date()
-    
+    print("상태 갱신 요청 \(completedMission) \(alarm)")
+    guard completedMission == nil else { return .missionCompleted }
     // AlarmModel이 없는 경우
     guard let alarm = alarm else { return .mainAlarmSettings }
 
@@ -59,8 +59,8 @@ class AlarmUseCase: AlarmStaus {
 extension AlarmUseCase: MainAlarmSettings {
   func addAlarm(alarm: AlarmModel) {
     DataStoreService<AlarmModel>.init().save(alarm)
-    LocalNotificationService.init().scheduleNotification(title: "미션시작", body: "귀신 퇴치하러 갑시당!", at: alarm.dueDate)
-    timerService?.scheduleAlarmAndMissionTimers(alarm)
+    LocalNotificationService.init().scheduleNotification(title: "미션시작", body: "귀신 퇴치하러 갑시당!", at: alarm.dueDate.addingTimeInterval(1)) //1초 지연 뒤 알림
+    timerService?.scheduleAlarmAndMissionTimers(alarm.delayBySeconds(1)) // 1초 지연 뒤 검증
     verifyAndChangeAlarmState()
   }
 }
@@ -74,6 +74,13 @@ extension AlarmUseCase: AlarmOnProcess {
       return nil
     }
   }
+  
+  /// 알람 진행 중에 삭제 합니다
+  func deleteAlarm() {
+    DataStoreService<AlarmModel>.init().remove()
+    timerService?.invalidateAllTimers()
+    verifyAndChangeAlarmState()
+  }
 }
 
 extension AlarmUseCase: MissionOnProcess {
@@ -86,8 +93,21 @@ extension AlarmUseCase: MissionOnProcess {
     }
   }
   
-  func deleteAlarm() {
+  /// 미션 성공! Mission 성공을 의미하는 값을 저장하고 알람을 삭제합니다
+  func missionCompletedAlarm() {
+    DataStoreService<MissionCompletedModel>.init().save(.init())
     DataStoreService<AlarmModel>.init().remove()
+    timerService?.invalidateAllTimers()
+    verifyAndChangeAlarmState()
+  }
+}
+
+extension AlarmUseCase: MissionCompleted {
+  /// 알람을 삭제하고 미션을 종료합니다
+  func endAlarm() {
+    DataStoreService<AlarmModel>.init().remove()
+    DataStoreService<MissionCompletedModel>.init().remove()
+    timerService?.invalidateAllTimers()
     verifyAndChangeAlarmState()
   }
 }

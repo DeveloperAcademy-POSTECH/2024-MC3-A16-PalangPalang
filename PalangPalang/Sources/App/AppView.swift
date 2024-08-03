@@ -1,22 +1,31 @@
 import SwiftUI
 
 struct AppView: View {
-  let appStatus: AlarmStaus = AlarmUseCase.shared
+  private let _alarmUseCase: AlarmUseCase
+  private var appStatus: AlarmStaus {
+    return _alarmUseCase
+  }
+  
+  init(alarmUseCase: AlarmUseCase) {
+    self._alarmUseCase = alarmUseCase
+  }
   
   var body: some View {
     switch appStatus.alarmStatus {
     case .mainAlarmSettings:
-      AlarmMainView()
+      AlarmMainView(alarmViewModel: .init(useCase: _alarmUseCase))
     case .alarmOnProcess:
-      AlarmOnProcessView()
+      AlarmOnProcessView(viewModel: .init(useCase: _alarmUseCase))
     case .missionOnProcess:
-      MissionOnProcessView()
+      MissionOnProcessView(viewModel: .init(useCase: _alarmUseCase))
     case .missionTimeout:
-      MissionTimeoutView()
+      MissionTimeoutView(useCase: _alarmUseCase)
+    case .missionCompleted:
+      MissionCompletedView(useCase: _alarmUseCase)
     }
   }
 }
 
 #Preview {
-  AlarmMainView()
+  AlarmMainView(alarmViewModel: .init(useCase: AlarmUseCase.init()))
 }

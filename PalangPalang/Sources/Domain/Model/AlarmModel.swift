@@ -12,9 +12,15 @@ struct AlarmModel: Storable {
   var startDate: Date = .now
   var dueDate: Date
   var missionDueDate: Date {
-    return dueDate.addingTimeInterval(AlarmModel.timeLimit)
+    return dueDate.addingTimeInterval(MissionCompletedModel.limitSeconds)
   }
   
   static let storageKey: String = "alarm"
-  static let timeLimit: TimeInterval = 3
+  
+  func delayBySeconds(_ seconds: Int) -> Self {
+    let timeInterval = TimeInterval(seconds)
+    let delayStartDate = startDate.addingTimeInterval(timeInterval)
+    let delayDueDate = dueDate.addingTimeInterval(timeInterval)
+    return AlarmModel(startDate: delayStartDate, dueDate: delayDueDate)
+  }
 }

@@ -10,4 +10,5 @@ import Foundation
 
 protocol AlarmOnProcess {
   func readAlarmDate() -> (start: Date, due: Date)?
+  func deleteAlarm()
 }

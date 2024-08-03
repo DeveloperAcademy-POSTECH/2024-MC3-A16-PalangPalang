@@ -9,18 +9,18 @@
 import Foundation
 
 @propertyWrapper
-struct ValidMinutes {
+struct ValidMinutesOrSecond {
   private var value: String
   private let range = 0...59
   private let initialValue = "00"
   
   var wrappedValue: String {
     get { value }
-    set { value = ValidMinutes.validate(newValue, range: range, initialValue: initialValue) }
+    set { value = ValidMinutesOrSecond.validate(newValue, range: range, initialValue: initialValue) }
   }
   
   init(wrappedValue: String) {
-    self.value = ValidMinutes.validate(wrappedValue, range: range, initialValue: initialValue)
+    self.value = ValidMinutesOrSecond.validate(wrappedValue, range: range, initialValue: initialValue)
   }
   
   private static func validate(_ newValue: String, range: ClosedRange<Int>, initialValue: String) -> String {
@@ -31,7 +31,7 @@ struct ValidMinutes {
     }
   }
   
-  static var availableMinutes: [String] {
+  static var availableMinutesOrSecond: [String] {
     (0...59).map { String(format: "%02d", $0) }
   }
 }

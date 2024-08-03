@@ -9,15 +9,17 @@
 import SwiftUI
 
 struct MissionTimeoutView: View {
+  let useCase: MissionCompleted
+  
   var body: some View {
     Button {
-      AlarmUseCase.shared.deleteAlarm()
+      useCase.endAlarm()
     } label: {
-      Text("MissionTimeoutView - 알림삭제")
+      Text("시간오버~ - 알림삭제")
     }
   }
 }
 
 #Preview {
-  MissionTimeoutView()
+  MissionTimeoutView(useCase: AlarmUseCase())
 }

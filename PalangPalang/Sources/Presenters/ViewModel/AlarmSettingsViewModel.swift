@@ -12,16 +12,7 @@ import Foundation
 class AlarmSettingsViewModel {
   struct State {
     var alarm: AlarmSettingsModel = .init()
-    
-    var formattedAlarmDate: String {
-      guard let alarmDate = alarm.convertDate else { return "Invalid Date" }
-      
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-      dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-      
-      return dateFormatter.string(from: alarmDate)
-    }
+
     var onSettings: Bool = false
     var readyForStart: Bool = false
   }
@@ -34,7 +25,11 @@ class AlarmSettingsViewModel {
   }
   
   private(set) var state: State = .init()
-  private let useCase: MainAlarmSettings = AlarmUseCase.shared
+  private let useCase: MainAlarmSettings
+  
+  init(useCase: MainAlarmSettings) {
+    self.useCase = useCase
+  }
   
   func effect(action: Action) {
     switch action {
@@ -52,7 +47,6 @@ class AlarmSettingsViewModel {
       guard let alarmDueDate = state.alarm.convertDate else { print("알람 변환실패"); return }
       let newAlarm = AlarmModel(dueDate: alarmDueDate)
       useCase.addAlarm(alarm: newAlarm)
-      
     }
   }
 }

@@ -10,5 +10,5 @@ import Foundation
 
 protocol MissionOnProcess {
   func readTimeoutDate() -> Date?
-  func deleteAlarm()
+  func missionCompletedAlarm()
 }

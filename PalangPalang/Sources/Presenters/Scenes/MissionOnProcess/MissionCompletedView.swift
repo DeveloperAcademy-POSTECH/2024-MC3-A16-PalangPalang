@@ -9,11 +9,20 @@
 import SwiftUI
 
 struct MissionCompletedView: View {
+  let useCase: MissionCompleted
+  
   var body: some View {
-    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    Button(
+      action: {
+        useCase.endAlarm()
+      },
+      label: {
+        Text("귀신을 이겨냈어영!!")
+      }
+    )
   }
 }
 
 #Preview {
-  MissionCompletedView()
+  MissionCompletedView(useCase: AlarmUseCase())
 }
