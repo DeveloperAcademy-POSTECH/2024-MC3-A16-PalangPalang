@@ -12,16 +12,6 @@ import Foundation
 class AlarmSettingsViewModel {
   struct State {
     var alarm: AlarmSettingsModel = .init()
-    
-    var formattedAlarmDate: String {
-      guard let alarmDate = alarm.convertDate else { return "Invalid Date" }
-      
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-      dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-      
-      return dateFormatter.string(from: alarmDate)
-    }
     var onSettings: Bool = false
     var readyForStart: Bool = false
   }
