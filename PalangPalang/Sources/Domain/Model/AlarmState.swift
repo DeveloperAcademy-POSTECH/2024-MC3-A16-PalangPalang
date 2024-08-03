@@ -12,5 +12,6 @@ enum AlarmState {
   case mainAlarmSettings
   case alarmOnProcess
   case missionOnProcess
+  case missionCompleted
   case missionTimeout
 }
