@@ -13,6 +13,8 @@ struct AlarmSettingsModel {
   @ValidMinutesOrSecond var minutes: String
   var isAM: Bool { return hour.toInt <= 12 }
   
+  var setHour: String { return isAM ? "\(hour)":"\(hour.toInt)-12"}
+  
   /// 입력한 hour, minutes 정보를 토대로 Date 반환 계산속성
   var convertDate: Date? {
     let calendar = Calendar.current
@@ -55,7 +57,7 @@ struct AlarmSettingsModel {
   }
 }
 
-private extension String {
+extension String {
   var toInt: Int {
     return Int(self) ?? 0
   }

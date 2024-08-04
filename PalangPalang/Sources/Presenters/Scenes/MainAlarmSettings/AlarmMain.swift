@@ -81,7 +81,7 @@ private struct Clock: View {
   
   var body: some View {
     HStack(spacing: 0) {
-      Text("\(alarm.hour)")
+      Text(alarm.setHour)
         .palangFont(.numH2)
         .padding(.horizontal,7)
       Text(":")
