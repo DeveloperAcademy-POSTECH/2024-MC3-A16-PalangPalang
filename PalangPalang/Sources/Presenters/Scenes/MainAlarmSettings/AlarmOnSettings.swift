@@ -13,7 +13,7 @@ struct AlarmOnSettings: View {
   
   var body: some View {
     VStack {
-      Text(alarmViewModel.state.alarm.isAM ? "AM" : "PM")
+      //Text(alarmViewModel.state.alarm.isAM ? "AM" : "PM")
       
       ClockSetting(alarm: .init(
         get: {alarmViewModel.state.alarm},
@@ -30,7 +30,9 @@ struct AlarmOnSettings: View {
           Text("설정완료")
         }
       )
-    }
+    }.frame(maxHeight: .infinity)
+    .background(.palangYellow01)
+      
   }
 }
 
