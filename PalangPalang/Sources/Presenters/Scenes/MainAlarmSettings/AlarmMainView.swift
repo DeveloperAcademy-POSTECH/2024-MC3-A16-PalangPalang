@@ -14,7 +14,7 @@ struct AlarmMainView: View {
   var body: some View {
     VStack {
       if !alarmViewModel.state.onSettings {
-        AlarmMain(alarmViewModel: alarmViewModel, alarmSettingModel: AlarmSettingsModel())
+        AlarmMain(alarmViewModel: alarmViewModel)
       } else {
         AlarmOnSettings(alarmViewModel: alarmViewModel)
       }

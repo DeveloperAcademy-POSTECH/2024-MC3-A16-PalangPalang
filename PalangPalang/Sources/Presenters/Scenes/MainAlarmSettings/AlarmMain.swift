@@ -10,13 +10,12 @@ import SwiftUI
 
 struct AlarmMain: View {
   let alarmViewModel: AlarmSettingsViewModel
-  let alarmSettingModel: AlarmSettingsModel
   
   var body: some View {
     VStack {
       Spacer()
       
-      Text(alarmSettingModel.isAM ? "AM":"PM")
+      Text(alarmViewModel.state.alarm.isAM ? "AM":"PM")
         .foregroundStyle(.palangGray)
         .palangFont(.textBody01Bold)
       
@@ -28,7 +27,6 @@ struct AlarmMain: View {
           alarmViewModel.effect(action: .tappedSettingsButton)
         },
         label: {
-          //Text("묙표 시간 설정하기")
           SettingButton()
         }
       )
@@ -59,7 +57,7 @@ struct AlarmMain: View {
 }
 
 #Preview {
-  AlarmMain(alarmViewModel: .init(useCase: AlarmUseCase.init()), alarmSettingModel: AlarmSettingsModel())
+  AlarmMain(alarmViewModel: .init(useCase: AlarmUseCase.init()))
 }
 
 //이렇게 뷰를 만들어 주는 게 맞는지,,?
