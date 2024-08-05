@@ -80,6 +80,8 @@ class AlarmOnProcessViewModel {
         self.state.timerM = timerInfo.minute
         self.state.timerS = timerInfo.seconds
         self.state.dueTime = dueTime
+        
+        self.dueDate = dueDate // 포그라운드 복귀 시 사용
         self.totalSecondsToDueDate = Double(timeIntervalStartToDue)
         
         startTimer(for: totalSeconds)
@@ -138,7 +140,6 @@ extension AlarmOnProcessViewModel {
   
   @objc private func verifyAndChangeTimerState() {
     guard let dueDate else { return }
-    
     let timeInterval = dueDate.timeIntervalSince(.now)
     let totalSeconds = Int(timeInterval)
     resetTimeRemaining(for: totalSeconds)
