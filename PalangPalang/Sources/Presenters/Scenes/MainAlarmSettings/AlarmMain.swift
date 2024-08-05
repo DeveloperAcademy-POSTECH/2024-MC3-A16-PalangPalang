@@ -10,14 +10,17 @@ import SwiftUI
 
 struct AlarmMain: View {
   let alarmViewModel: AlarmSettingsViewModel
+  @State private var isViewAppeared = false
   
   var body: some View {
     VStack {
       Spacer()
       
-      Text(alarmViewModel.state.alarm.isAM ? "AM":"PM")
-        .foregroundStyle(.palangGray)
-        .palangFont(.textBody01Bold)
+      if isViewAppeared {
+        Text(alarmViewModel.state.alarm.isAM ? "AM":"PM")
+          .foregroundStyle(.palangGray)
+          .palangFont(.textBody01Bold)
+      }
       
       Clock(alarm: alarmViewModel.state.alarm)
         .padding(.bottom,10)
@@ -53,6 +56,9 @@ struct AlarmMain: View {
     .frame(maxWidth: .infinity)
     .background(.palangYellow)
     .ignoresSafeArea()
+    .onAppear(){
+      isViewAppeared = true
+    }
   }
 }
 
@@ -81,7 +87,7 @@ private struct Clock: View {
   
   var body: some View {
     HStack(spacing: 0) {
-      Text(alarm.setHour)
+      Text(alarm.set12Hour)
         .palangFont(.numH2)
         .padding(.horizontal,7)
       Text(":")
