@@ -23,7 +23,7 @@ struct AlarmMain: View {
       }
       
       Clock(alarm: alarmViewModel.state.alarm)
-        .padding(.bottom,10)
+        .padding(.bottom, 10)
       
       Button(
         action: {
@@ -44,14 +44,14 @@ struct AlarmMain: View {
           Text("시작하기")
         }
       )
-      .disabled(!alarmViewModel.state.readyForStart)
       .palangFont(.textBody02)
       .foregroundColor(!alarmViewModel.state.readyForStart ? .palangText03 : .palangWhite)
       .frame(maxWidth: .infinity, maxHeight: 60)
       .background(!alarmViewModel.state.readyForStart ? .palangButton02 : .palangGray)
       .cornerRadius(16)
-      .padding(.horizontal,45)
+      .padding(.horizontal, 45)
       .padding(.bottom,55)
+      .disabled(!alarmViewModel.state.readyForStart)
     }
     .frame(maxWidth: .infinity)
     .background(.palangYellow)
@@ -68,12 +68,13 @@ struct AlarmMain: View {
 
 private struct SettingButton: View{
   
-  var body: some View{
+  var body: some View {
     HStack(spacing: 0) {
       Text("목표시간 설정하기")
         .palangFont(.textCaption01)
+      
       Image(systemName: "chevron.right")
-        .padding(.horizontal,2)
+        .padding(.horizontal, 2)
         .fontWeight(.medium)
     }
     .foregroundColor(.palangText00)
@@ -85,15 +86,16 @@ private struct Clock: View {
   let alarm: AlarmSettingsModel
   
   var body: some View {
-    HStack(spacing: 0) {
+    HStack(spacing: 7) {
       Text(alarm.set12Hour)
         .palangFont(.numH2)
-        .padding(.horizontal,7)
+      
       Text(":")
         .palangFont(.numSymbol02)
+      
       Text("\(alarm.minutes)")
         .palangFont(.numH2)
-        .padding(.horizontal,7)
-    }.foregroundColor(.palangText00)
+    }
+    .foregroundColor(.palangText00)
   }
 }
