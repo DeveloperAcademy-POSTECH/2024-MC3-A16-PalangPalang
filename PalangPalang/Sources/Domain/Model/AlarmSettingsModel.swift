@@ -59,7 +59,7 @@ struct AlarmSettingsModel {
   }
 
   func convert12Hour() -> String {
-    return isAM ? "\(hour)":"0\(hour.toInt-12)"
+    return isAM ? "\(hour)" : hour.toInt<=22 ? "0\(hour.toInt-12)" : "\(hour.toInt-12)"
   }
 }
 
