@@ -16,7 +16,7 @@ class AlarmSettingsViewModel {
     var onSettings: Bool = false
     var readyForStart: Bool = false
     var isAmTapped: Bool
-    
+    //처음 ampm 버튼 설정
     init(){
       self.isAmTapped = alarm.isAM
     }

@@ -66,7 +66,6 @@ struct AlarmMain: View {
   AlarmMain(alarmViewModel: .init(useCase: AlarmUseCase.init()))
 }
 
-//이렇게 뷰를 만들어 주는 게 맞는지,,?
 private struct SettingButton: View{
   
   var body: some View{
