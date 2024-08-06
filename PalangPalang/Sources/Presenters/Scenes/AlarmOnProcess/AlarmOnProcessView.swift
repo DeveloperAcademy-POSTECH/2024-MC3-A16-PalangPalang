@@ -66,12 +66,10 @@ struct AlarmOnProcessView: View {
         title: Text("중단"),
         message: Text("알림을 중단하고 메인 화면으로 돌아갈까요?"),
         primaryButton: .default(Text("확인")) {
-          print("확인 버튼을 눌렀습니다.")
           viewModel.effect(action: .tappedAlarmCancel)
           deleteAlert = false
         },
         secondaryButton: .cancel(Text("취소")) {
-          print("취소 버튼을 눌렀습니다.")
           deleteAlert = false
         }
       )

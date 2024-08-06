@@ -40,7 +40,6 @@ class AlarmUseCase: AlarmStaus {
   /// Alarm 값을 토대로 Alarm 상태 분석
   private func determineAppState(completedMission: MissionCompletedModel?, alarm: AlarmModel?) -> AlarmState {
     let currentDate = Date()
-    print("상태 갱신 요청 \(completedMission) \(alarm)")
     guard completedMission == nil else { return .missionCompleted }
     // AlarmModel이 없는 경우
     guard let alarm = alarm else { return .mainAlarmSettings }
