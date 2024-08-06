@@ -41,7 +41,7 @@ class MissionOnProcessViewModel {
   
   private var timer: Timer?
   private var missionDueDate: Date?
-  private var timeRemaining: Int = MissionCompletedModel.targetStep {
+  private var timeRemaining: Int = Int(MissionCompletedModel.limitSeconds) {
     willSet {
       if newValue >= 0 {
         effect(action: ._timeElapsed(totalSeconds: newValue))
@@ -70,8 +70,8 @@ class MissionOnProcessViewModel {
         
         let timerInfo = calculateTimeInterval(totalSeconds: totalSeconds)
         
-        self.state.timerH = timerInfo.minute
-        self.state.timerM = timerInfo.seconds
+        self.state.timerM = timerInfo.minute
+        self.state.timerS = timerInfo.seconds
         self.missionDueDate = timeOutDate // 포그라운드 복귀 시 사용
         self.state.zeroStepAction = { [weak self] in
           guard let self else { return }
@@ -88,8 +88,8 @@ class MissionOnProcessViewModel {
     case let ._timeElapsed(totalSteps):
       let timerInfo = calculateTimeInterval(totalSeconds: totalSteps)
       
-      state.timerH = timerInfo.minute
-      state.timerM = timerInfo.seconds
+      state.timerM = timerInfo.minute
+      state.timerS = timerInfo.seconds
       return
       
     case ._missionFailure:
