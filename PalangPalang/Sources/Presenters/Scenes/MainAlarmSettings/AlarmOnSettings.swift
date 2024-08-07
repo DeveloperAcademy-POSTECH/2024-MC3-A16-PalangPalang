@@ -34,7 +34,6 @@ struct AlarmOnSettings: View {
         label: {
           Text("완료")
             .frame(maxWidth: .infinity, maxHeight: 60)
-            
         }
       )
       .palangFont(.textBody01Bold)
