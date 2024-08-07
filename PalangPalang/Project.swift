@@ -37,5 +37,8 @@ let project = Project.app(
   name: "PalangPalang",
   destinations: .iOS,
   settings: settinges,
-  additionalTargets: []
+  additionalTargets: [],
+  dependencies: [
+    .external(name: "Lottie")
+  ]
 )
