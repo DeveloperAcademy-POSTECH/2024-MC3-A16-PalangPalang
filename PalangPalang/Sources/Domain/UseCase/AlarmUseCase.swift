@@ -40,7 +40,6 @@ class AlarmUseCase: AlarmStaus {
   /// Alarm 값을 토대로 Alarm 상태 분석
   private func determineAppState(completedMission: MissionCompletedModel?, alarm: AlarmModel?) -> AlarmState {
     let currentDate = Date()
-    print("상태 갱신 요청 \(completedMission) \(alarm)")
     guard completedMission == nil else { return .missionCompleted }
     // AlarmModel이 없는 경우
     guard let alarm = alarm else { return .mainAlarmSettings }
@@ -95,19 +94,44 @@ extension AlarmUseCase: MissionOnProcess {
   
   /// 미션 성공! Mission 성공을 의미하는 값을 저장하고 알람을 삭제합니다
   func missionCompletedAlarm() {
-    DataStoreService<MissionCompletedModel>.init().save(.init())
+    guard let alarmDate = DataStoreService<AlarmModel>.init().load() else { return }
+    
+    let timeInterval = alarmDate.dueDate.timeIntervalSince(alarmDate.startDate)
+    let missionCompletedModel: MissionCompletedModel = .init(missionOnProcessMinutes: String(Int(ceil(timeInterval / 60))))
+    
+    DataStoreService<MissionCompletedModel>.init().save(missionCompletedModel)
     DataStoreService<AlarmModel>.init().remove()
     timerService?.invalidateAllTimers()
+    
+    missionCountIncrease()
     verifyAndChangeAlarmState()
+  }
+  
+  func missionCountIncrease() {
+    if let missionCount = DataStoreService<Int>.init().load() {
+      DataStoreService<Int>.init().save(missionCount + 1)
+    } else {
+      DataStoreService<Int>.init().save(1)
+    }
   }
 }
 
 extension AlarmUseCase: MissionCompleted {
+  func missionOnProcessMinutes() -> String? {
+    return DataStoreService<MissionCompletedModel>.init().load()?.missionOnProcessMinutes
+  }
+  
   /// 알람을 삭제하고 미션을 종료합니다
   func endAlarm() {
     DataStoreService<AlarmModel>.init().remove()
     DataStoreService<MissionCompletedModel>.init().remove()
     timerService?.invalidateAllTimers()
     verifyAndChangeAlarmState()
+  }
+}
+
+extension AlarmUseCase: ReadMissionCount {
+  func readMissionCount() -> Int? {
+    return DataStoreService<Int>.init().load()
   }
 }

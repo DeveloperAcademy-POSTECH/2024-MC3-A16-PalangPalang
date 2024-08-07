@@ -7,10 +7,14 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct AlarmMain: View {
+  let ghostViewModel: GhostViewModel
   let alarmViewModel: AlarmSettingsViewModel
-  @State private var isViewAppeared = false
+  
+  private let screenWidth = UIScreen.main.bounds.width
+  private let screenHeight = UIScreen.main.bounds.height
   
   var body: some View {
     VStack {
@@ -52,19 +56,38 @@ struct AlarmMain: View {
       .disabled(!alarmViewModel.state.readyForStart)
     }
     .frame(maxWidth: .infinity)
+    
+    .background {
+      backGroundGhostView()
+    }
     .background(.palangYellow)
     .ignoresSafeArea()
+    .onAppear {
+      ghostViewModel.effect(._onAppear)
+    }
+  }
+  
+  @ViewBuilder
+  func backGroundGhostView() -> some View {
+    ForEach(ghostViewModel.state.allGhost, id: \.self.id) { ghost in
+      ghost.image
+        .resizable()
+        .scaledToFit()
+        .frame(width: GhostModel.ghostSize)
+        .scaleEffect(x: ghost.isFlipped ? -1 : 1, anchor: .center)
+        .position(ghost.position)
+    }
   }
 }
 
 #Preview {
-  AlarmMain(alarmViewModel: .init(useCase: AlarmUseCase.init()))
+  AlarmMain(ghostViewModel: .init(useCase: AlarmUseCase()), alarmViewModel: .init(useCase: AlarmUseCase()))
 }
 
-private struct SettingButton: View{
-  
+private struct SettingButton: View {
   var body: some View {
     HStack(spacing: 0) {
+      
       Text("목표시간 설정하기")
         .palangFont(.textCaption01)
       

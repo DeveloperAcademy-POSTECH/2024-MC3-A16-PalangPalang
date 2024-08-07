@@ -9,5 +9,6 @@
 import Foundation
 
 protocol MissionCompleted {
+  func missionOnProcessMinutes() -> String?
   func endAlarm()
 }

@@ -1,5 +1,5 @@
 //
-//  MissionModel.swift
+//  MissionCompletedModel.swift
 //  PalangPalang
 //
 //  Created by 박혜운 on 8/3/24.
@@ -9,8 +9,10 @@
 import Foundation
 
 struct MissionCompletedModel: Storable {
-  static let targetStep = 3
-  static let limitSeconds: TimeInterval = 10
+  var missionOnProcessMinutes: String
+  
+  static let targetStep = 30
+  static let limitSeconds: TimeInterval = 20
   
   static var storageKey: String { return "mission" }
 }
