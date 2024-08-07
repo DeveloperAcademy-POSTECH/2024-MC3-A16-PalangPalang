@@ -58,13 +58,12 @@ struct AlarmMain: View {
   }
   
   private func addGhost() { // 이 친구는 view에서 더 직접적인 친구라고 생각해서 여기에 넣었어요 어차피 로직 바뀔 것 같아서!?
-    let randomX = CGFloat.random(in: 60...(screenWidth - 61))
-    let randomY = CGFloat.random(in: 60...(screenHeight - 59))
+    let randomX = CGFloat.random(in: 61...(screenWidth - 61))
+    let randomY = CGFloat.random(in: 61...(screenHeight - 100))
     let randomImage = Bool.random() ? "ghost1" : "ghost2"
     
     let newGhostViewModel = GhostViewModel(initialPosition: CGPoint(x: randomX, y: randomY), imageName: randomImage)
     
-    // 새 유령을 배열에 추가
     ghostViewModels.append(newGhostViewModel)
   }
 }

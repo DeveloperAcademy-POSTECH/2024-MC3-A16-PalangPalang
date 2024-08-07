@@ -27,7 +27,7 @@ class GhostViewModel: ObservableObject { // modelview이름이 유령을 건든�
   init(initialPosition: CGPoint, imageName: String) {
     self.position = initialPosition
     self.imageName = imageName
-    self.velocity = CGPoint(x: 4.0, y: 4.0) // 초기 속도
+    self.velocity = CGPoint(x: 1.0, y: 1.0) // 초기 속도
     self.isFlipped = false // 이미지가 좌우 반전되었는지 여부
     
     // 유령의 위치를 0.02초마다 업데이트하는 타이머 설정, 이 부분은 봐도 모르겠어서 보노코드랑 gpt 도움좀 얻음
