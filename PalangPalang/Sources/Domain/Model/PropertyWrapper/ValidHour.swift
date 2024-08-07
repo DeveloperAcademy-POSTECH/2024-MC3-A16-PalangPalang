@@ -32,6 +32,6 @@ struct ValidHour {
   }
   
   static var availableHours: [String] {
-    (0...24).map { String(format: "%02d", $0) }
+    (0...12).map { String(format: "%02d", $0) }
   }
 }
