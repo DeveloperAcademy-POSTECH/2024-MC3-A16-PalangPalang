@@ -9,20 +9,134 @@
 import SwiftUI
 
 struct MissionCompletedView: View {
+  @State private var remaingMinutes: String = "0"
   let useCase: MissionCompleted
   
   var body: some View {
-    Button(
-      action: {
-        useCase.endAlarm()
-      },
-      label: {
-        Text("귀신을 이겨냈어영!!")
+    VStack {
+      Spacer()
+      
+      Text("생각 귀신\n돌파에 성공했어요!")
+        .multilineTextAlignment(.center)
+        .palangFont(.textBody01Bold)
+        .foregroundStyle(.palangText00)
+        .padding(.bottom, 22)
+      
+      Text("생각 귀신 Get")
+        .palangFont(.textBody02)
+        .foregroundStyle(.palangGray)
+      
+      
+      TwinkleGhost()
+        .padding(.bottom, 40)
+      
+      Text("\(remaingMinutes)분 몰입했어요")
+        .palangFont(.textH2)
+        .foregroundStyle(.palangText00)
+        .padding(.bottom, 110)
+      
+      // MARK: - 쿠로가 만든 버튼으로 교체 예정
+      Button(
+        action: {
+          useCase.endAlarm()
+        },
+        label: {
+          Text("메인으로")
+        }
+      )
+      .padding(.bottom, 34)
+    }
+    .frame(maxWidth: .infinity)
+    .frame(maxHeight: .infinity)
+    .background(
+      ZStack {
+        Color.palangGray
+          .ignoresSafeArea()
+        
+        YellowLight()
+        .position(x: UIScreen.main.bounds.width / 2 - 2, y: 800)
       }
     )
+    .onAppear {
+      guard let dateMin = useCase.missionOnProcessMinutes() else { return }
+      remaingMinutes = dateMin
+    }
   }
 }
 
 #Preview {
   MissionCompletedView(useCase: AlarmUseCase())
+}
+
+
+private struct YellowLight: View {
+  @State private var moveDistance: CGFloat = 0 // 이동 거리
+  var body: some View {
+    ZStack {
+      TrianglePath(moveDistance: moveDistance)
+        .foregroundStyle(.palangYellow)
+        .frame(height: 3000)
+        .scaleEffect(x: -1, y: 1)
+        .offset(x: 1)
+        .animation(
+          .easeInOut(duration: 1),
+          value: moveDistance
+        )
+      
+      TrianglePath(moveDistance: moveDistance)
+        .foregroundStyle(.palangYellow)
+        .frame(height: 3000)
+        .offset(x: -1)
+        .animation(.easeInOut(duration: 1), value: moveDistance)
+    }
+    .onAppear {
+      withAnimation(.easeInOut(duration: 0.4)) {
+        moveDistance = 200 // 선 길이를 10으로 증가
+      }
+    }
+  }
+}
+
+private struct TwinkleGhost: View {
+  
+  var body: some View {
+    PalangPalangAsset.Assets.ghostOpenEyes.swiftUIImage
+      .resizable()
+      .scaledToFit()
+      .frame(width: 101)
+      .scaleEffect(x: -1, y: 1, anchor: .center) // x축을 반전
+      .overlay(
+        alignment: .topTrailing,
+        content: {
+          Twinkle()
+            .offset(x: 30, y: -20)
+        }
+      )
+      .overlay(
+        alignment: .topLeading,
+        content: {
+          Twinkle()
+            .offset(x: -35, y: 22)
+        }
+      )
+      .overlay(
+        alignment: .bottomTrailing,
+        content: {
+          Twinkle()
+            .offset(x: 30, y: 12)
+        }
+      )
+      .frame(width: 184)
+      .frame(height: 300)
+  }
+}
+
+private struct Twinkle: View {
+  var body: some View {
+    LottieView(
+      animationFileName: "GetGhost",
+      loopMode: .playOnce
+    )
+    .frame(width: 20, height: 20)
+  }
 }

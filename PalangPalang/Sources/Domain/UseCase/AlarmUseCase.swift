@@ -94,7 +94,13 @@ extension AlarmUseCase: MissionOnProcess {
   
   /// 미션 성공! Mission 성공을 의미하는 값을 저장하고 알람을 삭제합니다
   func missionCompletedAlarm() {
-    DataStoreService<MissionCompletedModel>.init().save(.init())
+    guard let alarmDate = DataStoreService<AlarmModel>.init().load() else { return }
+    
+    let timeInterval = alarmDate.dueDate.timeIntervalSince(alarmDate.startDate)
+    let doubleTime = Double(timeInterval)
+    let missionCompletedModel: MissionCompletedModel = .init(missionOnProcessMinutes: String(Int(ceil(timeInterval / 60))))
+    
+    DataStoreService<MissionCompletedModel>.init().save(missionCompletedModel)
     DataStoreService<AlarmModel>.init().remove()
     timerService?.invalidateAllTimers()
     verifyAndChangeAlarmState()
@@ -102,6 +108,10 @@ extension AlarmUseCase: MissionOnProcess {
 }
 
 extension AlarmUseCase: MissionCompleted {
+  func missionOnProcessMinutes() -> String? {
+    return DataStoreService<MissionCompletedModel>.init().load()?.missionOnProcessMinutes
+  }
+  
   /// 알람을 삭제하고 미션을 종료합니다
   func endAlarm() {
     DataStoreService<AlarmModel>.init().remove()

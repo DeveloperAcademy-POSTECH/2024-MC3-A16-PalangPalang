@@ -14,18 +14,23 @@ extension Project {
     name: String,
     destinations: Destinations,
     settings: Settings?,
-    additionalTargets: [String]
+    additionalTargets: [String],
+    dependencies: [TargetDependency]
   ) -> Project {
     
-    var targets = makeAppTargets(
+    var allTargets = makeAppTargets(
       name: name,
       destinations: destinations,
-      dependencies: additionalTargets.map { TargetDependency.target(name: $0) })
-    targets += additionalTargets.flatMap({ makeFrameworkTargets(name: $0, destinations: destinations) })
-    return Project(name: name,
-                   organizationName: Environment.organizationName,
-                   settings: settings,
-                   targets: targets)
+      dependencies: dependencies
+    )
+    allTargets += additionalTargets.flatMap({ makeFrameworkTargets(name: $0, destinations: destinations) })
+//    allTargets += targets
+    return Project(
+      name: name,
+      organizationName: Environment.organizationName,
+      settings: settings,
+      targets: allTargets
+    )
   }
   
   // MARK: - Private
