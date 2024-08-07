@@ -40,11 +40,11 @@ struct AlarmMain: View {
         },
         label: {
           Text("시작하기")
+            .frame(maxWidth: .infinity, maxHeight: 60)
         }
       )
       .palangFont(.textBody02)
       .foregroundColor(!alarmViewModel.state.readyForStart ? .palangText03 : .palangWhite)
-      .frame(maxWidth: .infinity, maxHeight: 60)
       .background(!alarmViewModel.state.readyForStart ? .palangButton02 : .palangGray)
       .cornerRadius(16)
       .padding(.horizontal, 45)

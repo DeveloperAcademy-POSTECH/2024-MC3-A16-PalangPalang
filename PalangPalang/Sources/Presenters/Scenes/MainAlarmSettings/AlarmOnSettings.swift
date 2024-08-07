@@ -33,11 +33,12 @@ struct AlarmOnSettings: View {
         },
         label: {
           Text("완료")
-            .palangFont(.textBody01Bold)
-            .foregroundColor(.palangWhite)
+            .frame(maxWidth: .infinity, maxHeight: 60)
+            
         }
       )
-      .frame(maxWidth: .infinity, maxHeight: 60)
+      .palangFont(.textBody01Bold)
+      .foregroundColor(.palangWhite)
       .background(.palangGray)
       .cornerRadius(16)
       .padding(.horizontal, 131)
