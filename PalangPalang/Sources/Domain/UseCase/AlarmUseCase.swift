@@ -97,13 +97,22 @@ extension AlarmUseCase: MissionOnProcess {
     guard let alarmDate = DataStoreService<AlarmModel>.init().load() else { return }
     
     let timeInterval = alarmDate.dueDate.timeIntervalSince(alarmDate.startDate)
-    let doubleTime = Double(timeInterval)
     let missionCompletedModel: MissionCompletedModel = .init(missionOnProcessMinutes: String(Int(ceil(timeInterval / 60))))
     
     DataStoreService<MissionCompletedModel>.init().save(missionCompletedModel)
     DataStoreService<AlarmModel>.init().remove()
     timerService?.invalidateAllTimers()
+    
+    missionCountIncrease()
     verifyAndChangeAlarmState()
+  }
+  
+  func missionCountIncrease() {
+    if let missionCount = DataStoreService<Int>.init().load() {
+      DataStoreService<Int>.init().save(missionCount + 1)
+    } else {
+      DataStoreService<Int>.init().save(1)
+    }
   }
 }
 
@@ -118,5 +127,11 @@ extension AlarmUseCase: MissionCompleted {
     DataStoreService<MissionCompletedModel>.init().remove()
     timerService?.invalidateAllTimers()
     verifyAndChangeAlarmState()
+  }
+}
+
+extension AlarmUseCase: ReadMissionCount {
+  func readMissionCount() -> Int? {
+    return DataStoreService<Int>.init().load()
   }
 }
