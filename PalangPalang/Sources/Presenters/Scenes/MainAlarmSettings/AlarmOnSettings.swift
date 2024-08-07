@@ -14,16 +14,18 @@ struct AlarmOnSettings: View {
   var body: some View {
     VStack {
       Spacer()
+        .frame(height: 170)
       
-      ampmPicker(alarmViewModel: alarmViewModel)
-        .padding(.bottom, 20)
+      AmpmPicker(alarmViewModel: alarmViewModel)
+        .padding(.bottom, 10)
       
-      ClockSetting(alarm: .init(
-        get: {alarmViewModel.state.alarm},
-        set: { alarmViewModel.effect(action: .changeAlarm($0)) }
+      ClockSetting(
+        alarm: .init(
+          get: {alarmViewModel.state.alarm},
+          set: { alarmViewModel.effect(action: .changeAlarm($0)) }
+        )
       )
-      )
-      .frame(height: 280)
+      .frame(height: 240)
       
       Button(
         action: {
@@ -34,12 +36,13 @@ struct AlarmOnSettings: View {
             .palangFont(.textBody01Bold)
             .foregroundColor(.palangWhite)
         }
-      ).frame(maxWidth: .infinity, maxHeight: 60)
-        .background(.palangGray)
-        .cornerRadius(16)
-        .padding(.horizontal, 131)
-        .padding(.bottom, 145)
-        .padding(.top, 90)
+      )
+      .frame(maxWidth: .infinity, maxHeight: 60)
+      .background(.palangGray)
+      .cornerRadius(16)
+      .padding(.horizontal, 131)
+      .padding(.bottom, 145)
+      .padding(.top, 90)
       
     }
     .frame(maxHeight: .infinity)
@@ -107,15 +110,16 @@ private struct CustomPickerView: UIViewRepresentable {
       rowLabel.textAlignment = .center
       
       //selections영역 색 없애기
-      pickerView.subviews[1].alpha = 0
+      pickerView.subviews[1].backgroundColor = .clear
       
       //selection된 font weight 변경
       if rowLabel.text == self.parent.selection{
         rowLabel.font = .palangFont(.numH1Bold)
-        rowLabel.textColor = UIColor(hexCode: "2E2D2C")
+        //rowLabel.textColor = UIColor.black
+        
       } else {
         rowLabel.font = .palangFont(.numH1)
-        rowLabel.textColor = UIColor(hexCode: "2E2D2C")
+        //rowLabel.textColor = UIColor(hexCode: "2E2D2C")
       }
       
       view.addSubview(rowLabel)
@@ -137,14 +141,13 @@ private struct ClockSetting: View {
   @Binding var alarm: AlarmSettingsModel
   
   var body: some View {
-    HStack {
-      
+    HStack(spacing: 0) {
       CustomPickerView(data: [ValidHour.availableHours], selection: $alarm.set12Hour)
         .frame(width: 130)
       
       Text(":")
         .palangFont(.numSymbol01)
-        .fontWeight(.bold)
+        .foregroundColor(.palangText00)
         .padding(.bottom)
       
       CustomPickerView(data: [ValidMinutesOrSecond.availableMinutesOrSecond], selection: $alarm.minutes)
@@ -153,7 +156,7 @@ private struct ClockSetting: View {
   }
 }
 
-private struct ampmPicker: View {
+private struct AmpmPicker: View {
   @Bindable var alarmViewModel: AlarmSettingsViewModel
   
   var body: some View {
@@ -165,7 +168,7 @@ private struct ampmPicker: View {
           .palangFont(.textBody01Bold)
           .foregroundColor(alarmViewModel.state.isAmTapped ? .palangGray : .palangText02)
       })
-      .padding(.trailing,20)
+      .padding(.trailing, 20)
       
       Button(action: {
         alarmViewModel.effect(action: .tappedPmButton)

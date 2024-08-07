@@ -16,11 +16,9 @@ struct AlarmMain: View {
     VStack {
       Spacer()
       
-      if isViewAppeared {
-        Text(alarmViewModel.state.alarm.isAM ? "AM":"PM")
-          .foregroundStyle(.palangGray)
-          .palangFont(.textBody01Bold)
-      }
+      Text(alarmViewModel.state.alarm.isAM ? "AM":"PM")
+        .foregroundStyle(.palangGray)
+        .palangFont(.textBody01Bold)
       
       Clock(alarm: alarmViewModel.state.alarm)
         .padding(.bottom, 10)
@@ -50,15 +48,12 @@ struct AlarmMain: View {
       .background(!alarmViewModel.state.readyForStart ? .palangButton02 : .palangGray)
       .cornerRadius(16)
       .padding(.horizontal, 45)
-      .padding(.bottom,55)
+      .padding(.bottom, 55)
       .disabled(!alarmViewModel.state.readyForStart)
     }
     .frame(maxWidth: .infinity)
     .background(.palangYellow)
     .ignoresSafeArea()
-    .onAppear(){
-      isViewAppeared = true
-    }
   }
 }
 
