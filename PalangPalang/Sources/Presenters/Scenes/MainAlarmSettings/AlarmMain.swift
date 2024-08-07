@@ -10,31 +10,55 @@ import SwiftUI
 
 struct AlarmMain: View {
   let alarmViewModel: AlarmSettingsViewModel
-
+  @State private var isViewAppeared = false
+  
   var body: some View {
-    Spacer()
-    Clock(alarm: alarmViewModel.state.alarm)
-    
-    Button(
-      action: {
-        alarmViewModel.effect(action: .tappedSettingsButton)
-      },
-      label: {
-        Text("설정하기")
+    VStack {
+      Spacer()
+      
+      if isViewAppeared {
+        Text(alarmViewModel.state.alarm.isAM ? "AM":"PM")
+          .foregroundStyle(.palangGray)
+          .palangFont(.textBody01Bold)
       }
-    )
-    
-    Spacer()
-    
-    Button(
-      action: {
-        alarmViewModel.effect(action: .tappedStartAlarm)
-      },
-      label: {
-        Text("시작하기")
-      }
-    )
-    .disabled(!alarmViewModel.state.readyForStart)
+      
+      Clock(alarm: alarmViewModel.state.alarm)
+        .padding(.bottom, 10)
+      
+      Button(
+        action: {
+          alarmViewModel.effect(action: .tappedSettingsButton)
+        },
+        label: {
+          SettingButton()
+        }
+      )
+      
+      Spacer()
+      
+      Button(
+        action: {
+          alarmViewModel.effect(action: .tappedStartAlarm)
+        },
+        label: {
+          Text("시작하기")
+        }
+      )
+      .palangFont(.textBody02)
+      .foregroundColor(!alarmViewModel.state.readyForStart ? .palangText03 : .palangWhite)
+      .frame(maxWidth: .infinity, maxHeight: 60)
+      .background(!alarmViewModel.state.readyForStart ? .palangButton02 : .palangGray)
+      .cornerRadius(16)
+      .padding(.horizontal, 45)
+      .padding(.bottom,55)
+      .disabled(!alarmViewModel.state.readyForStart)
+    }
+    .frame(maxWidth: .infinity)
+    .background(.palangYellow)
+    .ignoresSafeArea()
+    .onAppear(){
+      isViewAppeared = true
+    }
   }
 }
 
@@ -42,14 +66,36 @@ struct AlarmMain: View {
   AlarmMain(alarmViewModel: .init(useCase: AlarmUseCase.init()))
 }
 
+private struct SettingButton: View{
+  
+  var body: some View {
+    HStack(spacing: 0) {
+      Text("목표시간 설정하기")
+        .palangFont(.textCaption01)
+      
+      Image(systemName: "chevron.right")
+        .padding(.horizontal, 2)
+        .fontWeight(.medium)
+    }
+    .foregroundColor(.palangText00)
+    
+  }
+}
+
 private struct Clock: View {
   let alarm: AlarmSettingsModel
   
   var body: some View {
-    HStack {
-      Text("\(alarm.hour)")
+    HStack(spacing: 7) {
+      Text(alarm.set12Hour)
+        .palangFont(.numH2)
+      
       Text(":")
+        .palangFont(.numSymbol02)
+      
       Text("\(alarm.minutes)")
+        .palangFont(.numH2)
     }
+    .foregroundColor(.palangText00)
   }
 }
