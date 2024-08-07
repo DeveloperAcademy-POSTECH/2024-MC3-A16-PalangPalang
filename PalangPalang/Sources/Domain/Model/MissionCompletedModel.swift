@@ -9,6 +9,8 @@
 import Foundation
 
 struct MissionCompletedModel: Storable {
+  var missionOnProcessMinutes: String
+  
   static let targetStep = 30
   static let limitSeconds: TimeInterval = 20
   
