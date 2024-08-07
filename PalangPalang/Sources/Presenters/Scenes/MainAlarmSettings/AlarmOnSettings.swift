@@ -111,9 +111,9 @@ private struct CustomPickerView: UIViewRepresentable {
       
       //selection된 font weight 변경
       if rowLabel.text == self.parent.selection{
-        rowLabel.font = .systemFont(ofSize: 80, weight: .bold)
+        rowLabel.font = .palangFont(.numH1Bold)
       } else {
-        rowLabel.font = .systemFont(ofSize: 80, weight: .regular)
+        rowLabel.font = .palangFont(.numH1)
       }
       
       view.addSubview(rowLabel)

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 public enum PalangFontType {
   // MARK: - 텍스트 전용 폰트타입
@@ -27,6 +28,12 @@ public enum PalangFontType {
   case numSymbol01
   case numSymbol02
   case numSymbol03
+}
+
+public enum UIkitPalangFontType {
+  // MARK: - 숫자 전용 폰트타입
+  case numH1
+  case numH1Bold
 }
 
 extension View {
@@ -154,6 +161,20 @@ extension View {
             .bold
             .swiftUIFont(size: 52)
         )
+    }
+  }
+}
+
+extension UIFont {
+  static func palangFont(_ name: UIkitPalangFontType)-> UIFont{
+    
+    switch name {
+    case .numH1:
+      return UIFont(name: "Ubuntu-Medium", size: 96) ?? UIFont()
+      
+    case .numH1Bold:
+      return UIFont(name: "Ubuntu-Bold", size: 96) ?? UIFont()
+      
     }
   }
 }
