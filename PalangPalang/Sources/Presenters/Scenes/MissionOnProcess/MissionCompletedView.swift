@@ -42,8 +42,15 @@ struct MissionCompletedView: View {
         },
         label: {
           Text("메인으로")
+            .frame(maxWidth: .infinity)
+            .frame(height: 60)
         }
       )
+      .palangFont(.textBody02)
+      .foregroundColor(.palangWhite)
+      .background(.palangGray)
+      .cornerRadius(16)
+      .padding(.horizontal, 44)
       .padding(.bottom, 34)
     }
     .frame(maxWidth: .infinity)
@@ -94,6 +101,32 @@ private struct YellowLight: View {
         moveDistance = 200 // 선 길이를 10으로 증가
       }
     }
+  }
+}
+
+private struct TrianglePath: Shape {
+  var moveDistance: CGFloat
+  
+  // 애니메이션 가능한 데이터를 지정
+  var animatableData: CGFloat {
+    get { moveDistance }
+    set { moveDistance = newValue }
+  }
+  
+  func path(in rect: CGRect) -> Path {
+    var path = Path()
+    
+    // A, B, C 좌표 설정
+    let A = CGPoint(x: rect.midX, y: rect.minY)
+    let B = CGPoint(x: rect.midX, y: rect.midY)
+    let C = CGPoint(x: rect.midX + moveDistance, y: rect.midY)
+    
+    path.move(to: A)
+    path.addLine(to: B)
+    path.addLine(to: C)
+    path.addLine(to: A)
+    
+    return path
   }
 }
 

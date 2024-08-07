@@ -13,7 +13,7 @@ struct AppView: View {
   var body: some View {
     switch appStatus.alarmStatus {
     case .mainAlarmSettings:
-      AlarmMainView(alarmViewModel: .init(useCase: _alarmUseCase))
+      AlarmMainView(alarmViewModel: .init(useCase: _alarmUseCase), ghostViewModel: .init(useCase: _alarmUseCase))
     case .alarmOnProcess:
       AlarmOnProcessView(viewModel: .init(useCase: _alarmUseCase))
     case .missionOnProcess:
@@ -27,5 +27,5 @@ struct AppView: View {
 }
 
 #Preview {
-  AlarmMainView(alarmViewModel: .init(useCase: AlarmUseCase.init()))
+  AppView(alarmUseCase: AlarmUseCase())
 }
