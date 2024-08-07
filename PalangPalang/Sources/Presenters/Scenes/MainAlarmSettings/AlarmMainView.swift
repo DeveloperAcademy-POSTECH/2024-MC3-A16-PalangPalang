@@ -10,11 +10,12 @@ import SwiftUI
 
 struct AlarmMainView: View {
   let alarmViewModel: AlarmSettingsViewModel
+  let ghostViewModel: GhostViewModel
   
   var body: some View {
     VStack {
       if !alarmViewModel.state.onSettings {
-        AlarmMain(alarmViewModel: alarmViewModel)
+        AlarmMain(ghostViewModel: ghostViewModel, alarmViewModel: alarmViewModel)
       } else {
         AlarmOnSettings(alarmViewModel: alarmViewModel)
       }
@@ -23,5 +24,8 @@ struct AlarmMainView: View {
 }
 
 #Preview {
-  AlarmMainView(alarmViewModel: .init(useCase: AlarmUseCase.init()))
+  AlarmMainView(
+    alarmViewModel: .init(useCase: AlarmUseCase()),
+    ghostViewModel: .init(useCase: AlarmUseCase())
+  )
 }
