@@ -74,8 +74,9 @@ private struct InfoLabelAndGoToHomeInfo: View {
       .background(.palangYellow)
       .cornerRadius(16)
       .padding(.horizontal, 44)
-      .padding(.bottom, 34)
+      .padding(.bottom, 55)
     }
+    .ignoresSafeArea()
   }
 }
 
