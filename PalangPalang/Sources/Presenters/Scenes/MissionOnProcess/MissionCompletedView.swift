@@ -13,7 +13,7 @@ struct MissionCompletedView: View {
   let useCase: MissionCompleted
   
   var body: some View {
-    VStack {
+    VStack(spacing: 0) {
       Spacer()
       
       Text("생각 귀신\n돌파에 성공했어요!")
@@ -26,16 +26,14 @@ struct MissionCompletedView: View {
         .palangFont(.textBody02)
         .foregroundStyle(.palangGray)
       
-      
       TwinkleGhost()
-        .padding(.bottom, 40)
+        .padding(.bottom, -10)
       
       Text("\(remaingMinutes)분 몰입했어요")
         .palangFont(.textH2)
         .foregroundStyle(.palangText00)
-        .padding(.bottom, 110)
+        .padding(.bottom, 133)
       
-      // MARK: - 쿠로가 만든 버튼으로 교체 예정
       Button(
         action: {
           useCase.endAlarm()
@@ -51,10 +49,11 @@ struct MissionCompletedView: View {
       .background(.palangGray)
       .cornerRadius(16)
       .padding(.horizontal, 44)
-      .padding(.bottom, 34)
+      .padding(.bottom, 55)
     }
     .frame(maxWidth: .infinity)
     .frame(maxHeight: .infinity)
+    .ignoresSafeArea()
     .background(
       ZStack {
         Color.palangGray
