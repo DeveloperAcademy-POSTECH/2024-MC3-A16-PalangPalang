@@ -59,7 +59,6 @@ private struct CustomPickerView: UIViewRepresentable {
   var data: [[String]]
   @Binding var selection: String
   
-  //UIView 그려주기
   func makeUIView(context: Context) -> UIPickerView {
     let picker = UIPickerView(frame: .zero)
     
@@ -91,7 +90,6 @@ private struct CustomPickerView: UIViewRepresentable {
       self.parent = CustomPickerView
     }
     
-    //몇개의 pickerComponent가 있는지 data 배열에서 개수 받아오기
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
       return 1 // 각 CustomPickerView에 대해 한 개의 컴포넌트만 필요
     }
@@ -115,7 +113,7 @@ private struct CustomPickerView: UIViewRepresentable {
       //selection된 font weight 변경
       if rowLabel.text == self.parent.selection{
         rowLabel.font = .palangFont(.numH1Bold)
-        //rowLabel.textColor = UIColor.black
+        rowLabel.textColor = UIColor.black
         
       } else {
         rowLabel.font = .palangFont(.numH1)
@@ -163,7 +161,8 @@ private struct AmpmPicker: View {
     HStack(spacing: 0) {
       Button(action: {
         alarmViewModel.effect(action: .tappedAmButton)
-      }, label: {
+      },
+      label: {
         Text("AM")
           .palangFont(.textBody01Bold)
           .foregroundColor(alarmViewModel.state.isAmTapped ? .palangGray : .palangText02)
@@ -172,7 +171,8 @@ private struct AmpmPicker: View {
       
       Button(action: {
         alarmViewModel.effect(action: .tappedPmButton)
-      }, label: {
+      },
+      label: {
         Text("PM")
           .palangFont(.textBody01Bold)
           .foregroundColor(alarmViewModel.state.isAmTapped ? .palangText02 : .palangGray)
