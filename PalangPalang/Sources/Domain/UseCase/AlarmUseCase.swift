@@ -58,7 +58,7 @@ class AlarmUseCase: AlarmStaus {
 extension AlarmUseCase: MainAlarmSettings {
   func addAlarm(alarm: AlarmModel) {
     DataStoreService<AlarmModel>.init().save(alarm)
-    LocalNotificationService.init().scheduleNotification(title: "미션시작", body: "귀신 퇴치하러 갑시당!", at: alarm.dueDate.addingTimeInterval(1)) //1초 지연 뒤 알림
+    LocalNotificationService.init().scheduleNotification(title: "미션시작!", body: "귀신 퇴치하러 가요", at: alarm.dueDate.addingTimeInterval(1)) //1초 지연 뒤 알림
     timerService?.scheduleAlarmAndMissionTimers(alarm.delayBySeconds(1)) // 1초 지연 뒤 검증
     verifyAndChangeAlarmState()
   }
@@ -132,6 +132,7 @@ extension AlarmUseCase: MissionCompleted {
 
 extension AlarmUseCase: ReadMissionCount {
   func readMissionCount() -> Int? {
+    _ = LocalNotificationService.init()
     return DataStoreService<Int>.init().load()
   }
 }

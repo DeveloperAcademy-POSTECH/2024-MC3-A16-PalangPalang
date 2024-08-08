@@ -56,12 +56,11 @@ struct AlarmMain: View {
       .disabled(!alarmViewModel.state.readyForStart)
     }
     .frame(maxWidth: .infinity)
-    
+    .ignoresSafeArea()
     .background {
       backGroundGhostView()
     }
     .background(.palangYellow)
-    .ignoresSafeArea()
     .onAppear {
       ghostViewModel.effect(._onAppear)
     }

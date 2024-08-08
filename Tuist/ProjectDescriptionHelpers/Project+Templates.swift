@@ -8,6 +8,8 @@ import Foundation
 ///
 ///
 
+let appName = "forout"
+
 extension Project {
   /// Helper function to create the Project for this ExampleApp
   public static func app(
@@ -63,7 +65,7 @@ extension Project {
       name: name,
       destinations: destinations,
       product: .app,
-      bundleId: "\(Environment.organizationName).\(name.lowercased())",
+      bundleId: "\(Environment.organizationName).\(appName)",
       deploymentTargets: Environment.deploymentTarget,
       infoPlist: .file(path: "Resources/InfoPlists/\(Environment.appName)-Info.plist"),
       sources: ["Sources/**"],
