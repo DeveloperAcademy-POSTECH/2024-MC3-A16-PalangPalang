@@ -155,7 +155,9 @@ extension View {
         )
     case .numSymbol03:
       return self
+        
         .font(
+          
           PalangPalangFontFamily
             .Ubuntu
             .bold
