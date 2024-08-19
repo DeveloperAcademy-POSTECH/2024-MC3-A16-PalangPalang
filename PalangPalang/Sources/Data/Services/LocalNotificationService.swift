@@ -30,6 +30,7 @@ struct LocalNotificationService {
     content.title = title
     content.body = body
     content.sound = .default
+    content.badge = 1
     
     let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
